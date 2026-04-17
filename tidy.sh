@@ -1,3 +1,5 @@
+#!/bin/bash
+
 CHECKS='-*,clang-analyzer-*,performance-*,bugprone-*'
 FILES=$(git ls-files '*.cpp' '*.cxx' '*.cc' | tr '\n' ' ')
 
