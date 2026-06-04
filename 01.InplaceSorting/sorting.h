@@ -8,8 +8,7 @@
 
 // ----------------------------- Пузырёк (например) --------------------------------------
 template <typename Iterator>
-void bubble_sort(Iterator begin, Iterator end)
-{
+void bubble_sort(Iterator begin, Iterator end) {
     if (begin == end) {
         return;
     }
@@ -53,8 +52,7 @@ void quick_sort_impl(Iterator left, Iterator right) {
 }
 
 template <typename Iterator>
-void quick_sort(Iterator begin, Iterator end)
-{
+void quick_sort(Iterator begin, Iterator end) {
     if (begin < end) {
         quick_sort_impl(begin, end);
     }
