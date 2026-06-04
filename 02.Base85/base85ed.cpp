@@ -15,8 +15,10 @@ static const char ALPHABET[] =
     "!#$%&()*+-;<=>?@^_`{|}~";
 
 // TODO: implement this in C++
-std::vector<uint8_t> base85::encode(std::vector<uint8_t> const &bytes) {
-    static const uint32_t pow85[5] = {
+std::vector<uint8_t> base85::encode(std::vector<uint8_t> const &bytes)
+{
+    static const uint32_t pow85[5] =
+    {
         52200625u,
         614125u,
         7225u,
@@ -28,13 +30,15 @@ std::vector<uint8_t> base85::encode(std::vector<uint8_t> const &bytes) {
     size_t i = 0;
     const size_t len = bytes.size();
 
-    while (i + 4 <= len) {
+    while (i + 4 <= len)
+    {
         uint32_t n = (uint32_t(bytes[i])     << 24)
                      | (uint32_t(bytes[i + 1]) << 16)
                      | (uint32_t(bytes[i + 2]) <<  8)
                      |  uint32_t(bytes[i + 3]);
 
-        for (int p = 0; p < 5; ++p) {
+        for (int p = 0; p < 5; ++p)
+        {
             int digit = static_cast<int>(n / pow85[p]);
             n = n % pow85[p];
             out.push_back(static_cast<uint8_t>(ALPHABET[digit]));
@@ -42,7 +46,8 @@ std::vector<uint8_t> base85::encode(std::vector<uint8_t> const &bytes) {
         i += 4;
     }
 
-    if (i < len) {
+    if (i < len)
+    {
         size_t r = len - i;
         uint8_t b0 = bytes[i];
         uint8_t b1 = (r >= 2) ? bytes[i + 1] : 0;
@@ -54,7 +59,8 @@ std::vector<uint8_t> base85::encode(std::vector<uint8_t> const &bytes) {
                      |  uint32_t(b3);
         int k = static_cast<int>(r + 1);
 
-        for (int p = 0; p < k; ++p) {
+        for (int p = 0; p < k; ++p)
+        {
             int digit = static_cast<int>(n / pow85[p]);
             n = n % pow85[p];
             out.push_back(static_cast<uint8_t>(ALPHABET[digit]));
@@ -65,11 +71,13 @@ std::vector<uint8_t> base85::encode(std::vector<uint8_t> const &bytes) {
 }
 
 // TODO: implement this in C++
-std::vector<uint8_t> base85::decode(std::vector<uint8_t> const &b85str) {
+std::vector<uint8_t> base85::decode(std::vector<uint8_t> const &b85str)
+{
     static int FR[256];
     static bool ready = false;
 
-    if (!ready) {
+    if (!ready)
+    {
         for (int i = 0; i < 256; ++i)
             FR[i] = -1;
         for (int i = 0; i < 85; ++i)
@@ -85,9 +93,11 @@ std::vector<uint8_t> base85::decode(std::vector<uint8_t> const &b85str) {
 
     std::vector<uint8_t> out;
 
-    for (size_t i = 0; i < s.size(); i += 5) {
+    for (size_t i = 0; i < s.size(); i += 5)
+    {
         uint32_t n = 0;
-        for (int j = 0; j < 5; ++j) {
+        for (int j = 0; j < 5; ++j)
+        {
             int d = FR[static_cast<unsigned char>(s[i + j])];
             if (d < 0)
                 return out;
