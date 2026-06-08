@@ -1,31 +1,40 @@
-#include <iostream>
-#include <string>
-
-#include <Eigen/Dense>
-#include <lazycsv.hpp>
-
+#include "Gauss_solve.h"
 #include "util.h"
+
+#include <fstream>
+#include <iostream>
 
 int main(int argc, const char *argv[])
 {
-    auto A = load_csv_to_matrix(argv[1]);
+    if (argc < 2)
+    {
+        std::cerr << "Usage: " << argv[0] << " input.csv [output.csv]\n";
+        return 1;
+    }
 
-    Eigen::MatrixXd B(3, 2); // ColMajor по-умолчанию
-    B << 7, 8,
-    9, 10,
-    11, 12;
+    const char *output_filename = argc > 2 ? argv[2] : "solution.csv";
 
-    Eigen::MatrixXd C = A * B;
+    try
+    {
+        GaussMatrix ab = load_csv_to_matrix(argv[1]);
+        GaussVector x = Gauss_solve(ab);
+        GaussMatrix result(x.rows(), 1);
+        result.col(0) = x;
 
-    std::cout << "Матрица A:\n" << A << "\n\n";
-    std::cout << "Матрица B:\n" << B << "\n\n";
-    std::cout << "Результат умножения (C = A * B):\n" << C << "\n";
+        std::ofstream out(output_filename);
+        if (!out)
+        {
+            std::cerr << "Cannot open output file\n";
+            return 1;
+        }
 
-    // Редактирование на месте
-    double c = 2.0;
-    A.row(0) += c * A.row(1);
-    A.coeffRef(1, 1) -= B.coeff(1, 1);
-    std::cout << "Новая матрица A:\n" << A << "\n\n";
+        print_matrix_as_csv(out, result, 6);
+    }
+    catch (const std::exception &error)
+    {
+        std::cerr << error.what() << '\n';
+        return 1;
+    }
 
     return 0;
 }

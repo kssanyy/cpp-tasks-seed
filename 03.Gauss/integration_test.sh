@@ -1,7 +1,6 @@
 #!/bin/bash
 
-status=true
+set -e
 
-# ---------------------------------------------------
-
-$status
+./gauss AB.csv solution.csv
+cmp solution.csv expected.csv
