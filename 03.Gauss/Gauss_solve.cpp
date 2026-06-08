@@ -5,14 +5,14 @@
 
 GaussVector Gauss_solve(GaussMatrix &ab)
 {
-    const int n = ab.rows();
-
-    if (ab.cols() != n + 1)
-    {
-        throw std::runtime_error("Bad augmented matrix size");
-    }
-
+    const int n = static_cast<int>(ab.rows());
+    const int m = static_cast<int>(ab.cols());
     const double eps = 1e-12;
+
+    if (n == 0 || m != n + 1)
+    {
+        throw std::runtime_error("Invalid augmented matrix size");
+    }
 
     for (int col = 0; col < n; ++col)
     {
@@ -35,24 +35,18 @@ GaussVector Gauss_solve(GaussMatrix &ab)
             ab.row(col).swap(ab.row(pivot));
         }
 
-        for (int row = col + 1; row < n; ++row)
+        const double pivot_value = ab(col, col);
+        ab.row(col) /= pivot_value;
+
+        for (int row = 0; row < n; ++row)
         {
-            const double factor = ab(row, col) / ab(col, col);
-            ab.row(row) -= factor * ab.row(col);
-            ab(row, col) = 0.0;
+            if (row != col)
+            {
+                const double factor = ab(row, col);
+                ab.row(row) -= factor * ab.row(col);
+            }
         }
     }
 
-    GaussVector result(n);
-    for (int row = n - 1; row >= 0; --row)
-    {
-        double rhs = ab(row, n);
-        for (int col = row + 1; col < n; ++col)
-        {
-            rhs -= ab(row, col) * result(col);
-        }
-        result(row) = rhs / ab(row, row);
-    }
-
-    return result;
+    return ab.col(n);
 }

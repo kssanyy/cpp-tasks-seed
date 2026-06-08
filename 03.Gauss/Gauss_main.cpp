@@ -3,32 +3,35 @@
 
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 
 int main(int argc, const char *argv[])
 {
-    if (argc < 2)
+    if (argc < 2 || argc > 3)
     {
         std::cerr << "Usage: " << argv[0] << " input.csv [output.csv]\n";
         return 1;
     }
 
-    const char *output_filename = argc > 2 ? argv[2] : "solution.csv";
-
     try
     {
         GaussMatrix ab = load_csv_to_matrix(argv[1]);
-        GaussVector x = Gauss_solve(ab);
-        GaussMatrix result(x.rows(), 1);
-        result.col(0) = x;
+        GaussVector solution = Gauss_solve(ab);
 
-        std::ofstream out(output_filename);
-        if (!out)
+        if (argc == 3)
         {
-            std::cerr << "Cannot open output file\n";
-            return 1;
+            std::ofstream out(argv[2]);
+            if (!out)
+            {
+                std::cerr << "Cannot open output CSV file\n";
+                return 1;
+            }
+            print_vector_as_csv(out, solution);
         }
-
-        print_matrix_as_csv(out, result, 6);
+        else
+        {
+            print_vector_as_csv(std::cout, solution);
+        }
     }
     catch (const std::exception &error)
     {
