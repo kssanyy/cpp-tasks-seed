@@ -31,7 +31,7 @@ TEST(BubbleSort, AlreadySorted)
 
     bubble_sort(v.begin(), v.end());
 
-    EXPECT_EQ(v, (std::vector<int>{1, 2, 3, 4, 5}));
+    EXPECT_EQ(v, (std::vector<int> {1, 2, 3, 4, 5}));
 }
 
 TEST(BubbleSort, ReverseOrder)
@@ -40,7 +40,7 @@ TEST(BubbleSort, ReverseOrder)
 
     bubble_sort(v.begin(), v.end());
 
-    EXPECT_EQ(v, (std::vector<int>{1, 2, 3, 4, 5}));
+    EXPECT_EQ(v, (std::vector<int> {1, 2, 3, 4, 5}));
 }
 
 TEST(BubbleSort, Duplicates)
@@ -49,7 +49,7 @@ TEST(BubbleSort, Duplicates)
 
     bubble_sort(v.begin(), v.end());
 
-    EXPECT_EQ(v, (std::vector<int>{1, 1, 2, 2, 3, 3, 4, 5}));
+    EXPECT_EQ(v, (std::vector<int> {1, 1, 2, 2, 3, 3, 4, 5}));
 }
 
 TEST(QuickSort, EmptyVector)
@@ -76,7 +76,7 @@ TEST(QuickSort, AlreadySorted)
 
     quick_sort(v.begin(), v.end());
 
-    EXPECT_EQ(v, (std::vector<int>{1, 2, 3, 4, 5}));
+    EXPECT_EQ(v, (std::vector<int> {1, 2, 3, 4, 5}));
 }
 
 TEST(QuickSort, ReverseOrder)
@@ -85,7 +85,7 @@ TEST(QuickSort, ReverseOrder)
 
     quick_sort(v.begin(), v.end());
 
-    EXPECT_EQ(v, (std::vector<int>{1, 2, 3, 4, 5}));
+    EXPECT_EQ(v, (std::vector<int> {1, 2, 3, 4, 5}));
 }
 
 TEST(QuickSort, Duplicates)
@@ -94,7 +94,7 @@ TEST(QuickSort, Duplicates)
 
     quick_sort(v.begin(), v.end());
 
-    EXPECT_EQ(v, (std::vector<int>{1, 1, 2, 2, 3, 3, 4, 5}));
+    EXPECT_EQ(v, (std::vector<int> {1, 1, 2, 2, 3, 3, 4, 5}));
 }
 
 TEST(QuickSort, CompareWithStdSort)
