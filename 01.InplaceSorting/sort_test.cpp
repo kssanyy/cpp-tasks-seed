@@ -1,11 +1,110 @@
 #include <gtest/gtest.h>
+#include <algorithm>
+#include <vector>
 
 // А вот тут collvalue.h не надо, берите просто инты
 #include "sorting.h"
 
 // Но проверьте, что сортировки таки работают...
 
-TEST(FooSuite, FooTest)
+TEST(BubbleSort, EmptyVector)
 {
-    EXPECT_EQ(0, 0);
+    std::vector<int> v;
+
+    bubble_sort(v.begin(), v.end());
+
+    EXPECT_TRUE(v.empty());
+}
+
+TEST(BubbleSort, OneElement)
+{
+    std::vector<int> v{42};
+
+    bubble_sort(v.begin(), v.end());
+
+    EXPECT_EQ(v, std::vector<int>({42}));
+}
+
+TEST(BubbleSort, AlreadySorted)
+{
+    std::vector<int> v{1, 2, 3, 4, 5};
+
+    bubble_sort(v.begin(), v.end());
+
+    EXPECT_EQ(v, (std::vector<int>{1, 2, 3, 4, 5}));
+}
+
+TEST(BubbleSort, ReverseOrder)
+{
+    std::vector<int> v{5, 4, 3, 2, 1};
+
+    bubble_sort(v.begin(), v.end());
+
+    EXPECT_EQ(v, (std::vector<int>{1, 2, 3, 4, 5}));
+}
+
+TEST(BubbleSort, Duplicates)
+{
+    std::vector<int> v{5, 1, 3, 1, 4, 3, 2, 2};
+
+    bubble_sort(v.begin(), v.end());
+
+    EXPECT_EQ(v, (std::vector<int>{1, 1, 2, 2, 3, 3, 4, 5}));
+}
+
+TEST(QuickSort, EmptyVector)
+{
+    std::vector<int> v;
+
+    quick_sort(v.begin(), v.end());
+
+    EXPECT_TRUE(v.empty());
+}
+
+TEST(QuickSort, OneElement)
+{
+    std::vector<int> v{42};
+
+    quick_sort(v.begin(), v.end());
+
+    EXPECT_EQ(v, std::vector<int>({42}));
+}
+
+TEST(QuickSort, AlreadySorted)
+{
+    std::vector<int> v{1, 2, 3, 4, 5};
+
+    quick_sort(v.begin(), v.end());
+
+    EXPECT_EQ(v, (std::vector<int>{1, 2, 3, 4, 5}));
+}
+
+TEST(QuickSort, ReverseOrder)
+{
+    std::vector<int> v{5, 4, 3, 2, 1};
+
+    quick_sort(v.begin(), v.end());
+
+    EXPECT_EQ(v, (std::vector<int>{1, 2, 3, 4, 5}));
+}
+
+TEST(QuickSort, Duplicates)
+{
+    std::vector<int> v{5, 1, 3, 1, 4, 3, 2, 2};
+
+    quick_sort(v.begin(), v.end());
+
+    EXPECT_EQ(v, (std::vector<int>{1, 1, 2, 2, 3, 3, 4, 5}));
+}
+
+TEST(QuickSort, CompareWithStdSort)
+{
+    std::vector<int> v{9, 4, 7, 2, 8, 1, 6, 3, 5};
+    std::vector<int> expected = v;
+
+    std::sort(expected.begin(), expected.end());
+
+    quick_sort(v.begin(), v.end());
+
+    EXPECT_EQ(v, expected);
 }
