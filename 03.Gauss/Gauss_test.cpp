@@ -22,7 +22,7 @@ TEST(GaussSolve, TwoByTwoSystem)
 {
     GaussMatrix ab(2, 3);
     ab << 2, 1, 4,
-          1, 3, 7;
+    1, 3, 7;
 
     const GaussVector x = Gauss_solve(ab);
 
@@ -34,8 +34,8 @@ TEST(GaussSolve, ThreeByThreeSystem)
 {
     GaussMatrix ab(3, 4);
     ab << 1, 1, 1, 6,
-          2, -1, 1, 3,
-          1, 2, 0, 5;
+    2, -1, 1, 3,
+    1, 2, 0, 5;
 
     const GaussVector x = Gauss_solve(ab);
 
@@ -48,8 +48,8 @@ TEST(GaussSolve, IdentityMatrix)
 {
     GaussMatrix ab(3, 4);
     ab << 1, 0, 0, 5,
-          0, 1, 0, 6,
-          0, 0, 1, 7;
+    0, 1, 0, 6,
+    0, 0, 1, 7;
 
     const GaussVector x = Gauss_solve(ab);
 
@@ -90,7 +90,7 @@ TEST(GaussSolve, RejectsSingularMatrix)
 {
     GaussMatrix ab(2, 3);
     ab << 1, 2, 3,
-          2, 4, 6;
+    2, 4, 6;
 
     EXPECT_THROW(Gauss_solve(ab), std::runtime_error);
 }
